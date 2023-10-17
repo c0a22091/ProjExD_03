@@ -24,7 +24,7 @@ class Score:
         self.font = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30)
         self.color = (0, 0, 255)
         self.value = 0
-        self.img = self.font.render("Score: {}".format(self.value), True, self.color)
+        self.img = self.font.render("スコア: {}".format(self.value), True, self.color)
         self.position = (100, HEIGHT - 50)  # 画面左下から100ピクセル右、画面下部から50ピクセル上
 
     def update(self):
