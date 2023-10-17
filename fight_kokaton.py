@@ -17,6 +17,21 @@ def check_bound(obj_rct: pg.Rect) -> tuple[bool, bool]:
     if obj_rct.top < 0 or HEIGHT < obj_rct.bottom:
         tate = False
     return yoko, tate
+
+
+class Score:
+    def __init__(self):
+        self.font = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30)
+        self.color = (0, 0, 255)
+        self.value = 0
+        self.img = self.font.render("Score: {}".format(self.value), True, self.color)
+        self.position = (100, HEIGHT - 50)  # 画面左下から100ピクセル右、画面下部から50ピクセル上
+
+    def update(self):
+        self.img = self.font.render("Score: {}".format(self.value), True, self.color)
+
+
+
 class Bird:
     """
     ゲームキャラクター（こうかとん）に関するクラス
@@ -146,6 +161,7 @@ def main():
     bombs = [Bomb() for _ in range(NUM_OF_BOMBS)]
     beam = None
     clock = pg.time.Clock()
+    score = Score()
     tmr = 0
     while True:
         for event in pg.event.get():
@@ -171,6 +187,8 @@ def main():
                     beam = None
                     bombs[i] = None
                     bird.change_img(6, screen)
+                    score.value += 1
+                    score.update()
                     pg.display.update()
                     
 
@@ -178,6 +196,7 @@ def main():
 
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)
+        screen.blit(score.img, score.position)
         for bomb in bombs:
             bomb.update(screen)
         if beam is not None:
